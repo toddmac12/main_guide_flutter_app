@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
-import './question.dart';
+
 import './answer.dart';
+import './question.dart';
 
 class Quiz extends StatelessWidget {
-  final List<Map<String, Object>> questions;
-  final int questionIndex;
+  final questionAnswers;
   final Function answerQuestion;
+  final indexNum;
 
-  Quiz(
-      {@required this.answerQuestion,
-      @required this.questionIndex,
-      @required this.questions});
-
+  Quiz(this.questionAnswers, this.answerQuestion, this.indexNum);
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
-        Question(questions[questionIndex]['questionText']),
-        ...(questions[questionIndex]['answers'] as List<Map<String, Object>>)
-            .map((answer) {
-          return Answer(() => answerQuestion(answer['score']), answer['text']);
-        }).toList()
+      children: [
+        Question(questionAnswers[indexNum]["quesText"]),
+        ...((questionAnswers[indexNum]["ansText"] as Map).keys.toList())
+            .map((ans) => Answer(answerQuestion, ans)),
       ],
+      mainAxisAlignment: MainAxisAlignment.center,
     );
   }
 }
+
+// Column(
+//                 children: [
+//                   Question(_questionAnswers[_indexNum]["quesText"]),
+//                   ...( (_questionAnswers[_indexNum]["ansText"] as Map).keys.toList())
+//                       .map((ans) => Answer(answerQuestion, ans)),
+//                 ],
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//               )
