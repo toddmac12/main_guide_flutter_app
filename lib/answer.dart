@@ -1,45 +1,21 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 
-class Result extends StatelessWidget {
-  final int resultScore;
-  final Function resetHandler;
+class Answer extends StatelessWidget {
+  final Function selectHandler;
+  final String answerText;
 
-  Result(this.resultScore, this.resetHandler);
-
-  String get resultPhrase {
-    String resultText = 'You did it';
-    if (resultScore <= 8) {
-      resultText = 'You are awesome and innocent!';
-    } else if (resultScore <= 12) {
-      resultText = 'Pretty likeable!';
-    } else if (resultScore <= 16) {
-      resultText = 'You are ... strange?!';
-    } else {
-      resultText = 'You are so bad!';
-    }
-    return resultText;
-  }
+  Answer(this.selectHandler, this.answerText);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: <Widget>[
-          Text(
-            resultPhrase,
-            style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          FlatButton(
-            child: Text('Restart Quiz!'),
-            onPressed: resetHandler,
-            textColor: Colors.blue,
-          ),
-        ],
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+    return Container(
+      width: double.infinity,
+      // ignore: deprecated_member_use
+      child: RaisedButton(
+        color: Colors.blue,
+        textColor: Colors.white,
+        child: Text(answerText),
+        onPressed: selectHandler,
       ),
     );
   }

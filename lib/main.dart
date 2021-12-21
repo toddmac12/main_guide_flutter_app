@@ -1,66 +1,76 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print
+//Building a simple flutter application from scratch
 
 import 'package:flutter/material.dart';
+import 'package:revision_flutter_basics/quiz.dart';
+import 'package:revision_flutter_basics/result.dart';
 
-import './result.dart';
 import './quiz.dart';
+import './result.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
-  var _indexNum = 0, _score = 0;
+  int _questionIndex = 0;
+  int _totalScore = 0;
 
-  var _questionAnswers = [
+  final _questions = const [
     {
-      "quesText": "What is the capital of India ?",
-      "ansText": {"Mumbai": 0, "New Delhi": 1, "Bengaluru": 0}
+      'questionText': 'Which is the capital city of Nepal?',
+      'answers': [
+        {'text': 'Delhi', 'score': 0},
+        {'text': 'Kathmandu', 'score': 10},
+        {'text': 'Dhaka', 'score': 0},
+        {'text': 'Bangkok', 'score': 0},
+      ]
     },
     {
-      "quesText": "Who is the captain of Indian Cricket Team ?",
-      "ansText": {"MS Dhoni": 1, "Sachin Tendulkar": 0, "Dinesh Kartik": 0}
+      'questionText': 'Who is the father of Computers?',
+      'answers': [
+        {'text': 'Albert Einstein', 'score': 0},
+        {'text': 'Thomas A. Edition', 'score': 0},
+        {'text': 'Charles Babbage', 'score': 10},
+        {'text': 'Bijaya Shahi', 'score': 0},
+      ]
     },
     {
-      "quesText": "What is India's national bird ?",
-      "ansText": {"Swan": 0, "Peacock": 1, "Eagle": 0},
+      'questionText': 'What is our national Animal?',
+      'answers': [
+        {'text': 'Tiger', 'score': 0},
+        {'text': 'Rhino', 'score': 0},
+        {'text': 'Elephant', 'score': 0},
+        {'text': 'Cow', 'score': 10},
+      ]
     },
     {
-      "quesText": "Do you want to become a Software Engineer at GoOgle ?",
-      "ansText": {"Go to": 0, "AlgoExpert": 1, ".io": 0},
-    },
-    {
-      "quesText": "How many times do pigeons fart in a day ?",
-      "ansText": {"Less than my wife": 0, "More than you do": 1, "Zero": 0},
-    },
-    {
-      "quesText": "Where is America ?",
-      "ansText": {"Earth": 0, "Moon": 1, "Mars": 0},
+      'questionText': 'Who united Nepal?',
+      'answers': [
+        {'text': 'Bhim Sumsher Rana', 'score': 0},
+        {'text': 'Prithivi Narayan Shah', 'score': 10},
+        {'text': 'Bala Bhadra Kuwar', 'score': 0},
+        {'text': 'Jackie Chan', 'score': 0},
+      ]
     },
   ];
 
-  void resetQuiz() {
+  void _answerQuestions(int score) {
+    _totalScore += score;
     setState(() {
-      _indexNum = 0;
-      _score = 0;
+      _questionIndex += 1;
     });
   }
 
-  void answerQuestion(String indx) {
+  void _resetQuiz(){
     setState(() {
-      if (_indexNum < _questionAnswers.length)
-        _score += (_questionAnswers[_indexNum]["ansText"] as Map)[indx];
-
-      _indexNum++;
+      _questionIndex = 0;
+      _totalScore = 0;
     });
-
-    if (_indexNum > _questionAnswers.length)
-      print("Answer Chosen !");
-    else
-      print("Quiz Over!");
   }
 
   @override
@@ -68,32 +78,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Quiz App"),
+          title: const Text('My Quiz App'),
+          centerTitle: true,
         ),
-        body: _indexNum < _questionAnswers.length
-            ? Quiz(_questionAnswers, answerQuestion, _indexNum)
-            : Result(_score, resetQuiz),
-      ),
-    );
-  }
-}
-
-//This code will work more efficiently. Thank me later
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final wordPair = WordPair.random();
-    return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to Flutter'),
-        ),
-        body: Center(
-          child: Text(wordPair.asPascalCase),
-        ),
+        body: _questionIndex < _questions.length
+            ? Quiz(answerQuestions : _answerQuestions, questions: _questions, questionIndex: _questionIndex)
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
