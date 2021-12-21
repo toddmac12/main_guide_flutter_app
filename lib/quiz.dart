@@ -25,7 +25,7 @@ class Quiz extends StatelessWidget {
         //the three dots(...) also called spread operator in the below transforms the nested list as individual list in the surrounding values
         ...(questions[questionIndex]['answers'] as List<Map<String, Object>>)
             .map((answer) {
-          return Answers(() => answerQuestions(answer['score']), answer['text']);
+          return Answer(() => answerQuestions(answer['score']), answer['text']);
         }).toList()
       ],
     );
