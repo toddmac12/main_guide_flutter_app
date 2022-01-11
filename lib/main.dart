@@ -1,90 +1,85 @@
-//Building a simple flutter application from scratch
+// ignore_for_file: camel_case_types
 
+import 'package:first_app/result.dart';
 import 'package:flutter/material.dart';
-import 'package:revision_flutter_basics/quiz.dart';
-import 'package:revision_flutter_basics/result.dart';
-
 import './quiz.dart';
 import './result.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(myApp());
+}
 
-class MyApp extends StatefulWidget {
+class myApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _MyAppState();
+    return _myAppState();
   }
 }
 
-class _MyAppState extends State<MyApp> {
-  int _questionIndex = 0;
-  int _totalScore = 0;
+class _myAppState extends State<myApp> {
+  var _questionindex = 0;
+  var _totalscore = 0;
 
-  final _questions = const [
-    {
-      'questionText': 'Which is the capital city of Nepal?',
-      'answers': [
-        {'text': 'Delhi', 'score': 0},
-        {'text': 'Kathmandu', 'score': 10},
-        {'text': 'Dhaka', 'score': 0},
-        {'text': 'Bangkok', 'score': 0},
-      ]
-    },
-    {
-      'questionText': 'Who is the father of Computers?',
-      'answers': [
-        {'text': 'Albert Einstein', 'score': 0},
-        {'text': 'Thomas A. Edition', 'score': 0},
-        {'text': 'Charles Babbage', 'score': 10},
-        {'text': 'Bijaya Shahi', 'score': 0},
-      ]
-    },
-    {
-      'questionText': 'What is our national Animal?',
-      'answers': [
-        {'text': 'Tiger', 'score': 0},
-        {'text': 'Rhino', 'score': 0},
-        {'text': 'Elephant', 'score': 0},
-        {'text': 'Cow', 'score': 10},
-      ]
-    },
-    {
-      'questionText': 'Who united Nepal?',
-      'answers': [
-        {'text': 'Bhim Sumsher Rana', 'score': 0},
-        {'text': 'Prithivi Narayan Shah', 'score': 10},
-        {'text': 'Bala Bhadra Kuwar', 'score': 0},
-        {'text': 'Jackie Chan', 'score': 0},
-      ]
-    },
-  ];
-
-  void _answerQuestions(int score) {
-    _totalScore += score;
+  void _resetquiz() {
     setState(() {
-      _questionIndex += 1;
+      _questionindex = 0;
+      _totalscore = 0;
     });
   }
 
-  void _resetQuiz(){
+  void _answerQuestion(int score) {
+    _totalscore += score;
+
     setState(() {
-      _questionIndex = 0;
-      _totalScore = 0;
+      _questionindex = _questionindex + 1;
     });
+    print(_questionindex);
   }
 
   @override
   Widget build(BuildContext context) {
+    final _questions = const [
+      {
+        'question': 'Whats your favourite color?',
+        'answer': [
+          {'text': 'Black', 'score': 10},
+          {'text': 'Blue', 'score': 4},
+          {'text': 'Red', 'score': 7},
+          {'text': 'Green', 'score': 1},
+        ]
+      },
+      {
+        'question': 'Whats your favourite animal?',
+        'answer': [
+          {'text': 'Crocodile', 'score': 10},
+          {'text': 'Lion', 'score': 8},
+          {'text': 'Goat', 'score': 1},
+          {'text': 'Horse', 'score': 3},
+        ]
+      },
+      {
+        'question': 'Whats your favourite number?',
+        'answer': [
+          {'text': '10', 'score': 10},
+          {'text': '8', 'score': 8},
+          {'text': '1', 'score': 1},
+          {'text': '3', 'score': 3},
+        ]
+      },
+    ];
+
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('My Quiz App'),
-          centerTitle: true,
-        ),
-        body: _questionIndex < _questions.length
-            ? Quiz(answerQuestions : _answerQuestions, questions: _questions, questionIndex: _questionIndex)
-            : Result(_totalScore, _resetQuiz),
-      ),
+          appBar: AppBar(
+            title: Text('First App'),
+          ),
+          body: _questionindex < _questions.length
+              ? Quiz(
+                  answerQuestion: _answerQuestion,
+                  questionindex: _questionindex,
+                  questions: _questions,
+                )
+              : Result(_totalscore, _resetquiz)),
     );
   }
 }
