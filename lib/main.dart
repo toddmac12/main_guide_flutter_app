@@ -1,9 +1,9 @@
 // ignore_for_file: camel_case_types
 
-import 'package:first_app/result.dart';
+import 'package:first_app/results.dart';
 import 'package:flutter/material.dart';
 import './quiz.dart';
-import './result.dart';
+import 'results.dart';
 
 void main() {
   runApp(myApp());
