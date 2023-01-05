@@ -1,20 +1,18 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 
 class Result extends StatelessWidget {
-  final int resultscore;
+  final int resultScore;
   final Function resetter;
 
-  Result(this.resultscore, this.resetter);
+  Result(this.resultScore, this.resetter);
 
-  String get resultphrase {
+  String get resultPhrase {
     String result;
-    if (resultscore <= 8) {
+    if (resultScore <= 8) {
       result = 'You are awesome and innocent!';
-    } else if (resultscore <= 12) {
+    } else if (resultScore <= 12) {
       result = 'Pretty likeable!';
-    } else if (resultscore <= 16) {
+    } else if (resultScore <= 16) {
       result = 'You are ... strange?!';
     } else {
       result = 'You are so bad!';
@@ -27,7 +25,7 @@ class Result extends StatelessWidget {
     return Column(
       children: <Widget>[
         Text(
-          resultphrase,
+          resultPhrase,
           style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
         ),
         FlatButton(
@@ -39,3 +37,4 @@ class Result extends StatelessWidget {
     );
   }
 }
+
