@@ -1,46 +1,44 @@
-// ignore_for_file: camel_case_types
-
 import 'package:first_app/results.dart';
 import 'package:flutter/material.dart';
 import './quiz.dart';
 import 'results.dart';
 
 void main() {
-  runApp(myApp());
+  runApp(MyApp());
 }
 
-class myApp extends StatefulWidget {
+class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _myAppState();
+    return _MyAppState();
   }
 }
 
-class _myAppState extends State<myApp> {
-  var _questionindex = 0;
-  var _totalscore = 0;
+class _MyAppState extends State<MyApp> {
+  var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _resetquiz() {
+  void _resetQuiz() {
     setState(() {
-      _questionindex = 0;
-      _totalscore = 0;
+      _questionIndex = 0;
+      _totalScore = 0;
     });
   }
 
   void _answerQuestion(int score) {
-    _totalscore += score;
+    _totalScore += score;
 
     setState(() {
-      _questionindex = _questionindex + 1;
+      _questionIndex = _questionIndex + 1;
     });
-    print(_questionindex);
+    print(_questionIndex);
   }
 
   @override
   Widget build(BuildContext context) {
     final _questions = const [
       {
-        'question': 'Whats your favourite color?',
+        'question': 'What is your favourite color?',
         'answer': [
           {'text': 'Black', 'score': 10},
           {'text': 'Blue', 'score': 4},
@@ -49,7 +47,7 @@ class _myAppState extends State<myApp> {
         ]
       },
       {
-        'question': 'Whats your favourite animal?',
+        'question': 'What is your favourite animal?',
         'answer': [
           {'text': 'Crocodile', 'score': 10},
           {'text': 'Lion', 'score': 8},
@@ -58,7 +56,7 @@ class _myAppState extends State<myApp> {
         ]
       },
       {
-        'question': 'Whats your favourite number?',
+        'question': 'What is your favourite number?',
         'answer': [
           {'text': '10', 'score': 10},
           {'text': '8', 'score': 8},
@@ -73,13 +71,13 @@ class _myAppState extends State<myApp> {
           appBar: AppBar(
             title: Text('First App'),
           ),
-          body: _questionindex < _questions.length
+          body: _questionIndex < _questions.length
               ? Quiz(
                   answerQuestion: _answerQuestion,
-                  questionindex: _questionindex,
+                  questionIndex: _questionIndex,
                   questions: _questions,
                 )
-              : Result(_totalscore, _resetquiz)),
+              : Result(_totalScore, _resetQuiz)),
     );
   }
 }
